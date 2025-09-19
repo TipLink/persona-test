@@ -9,7 +9,9 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jackson-tiplink.persona-test",
+      "appleTeamId": "UQUN5697XB"
     },
     "android": {
       "adaptiveIcon": {
