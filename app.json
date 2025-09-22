@@ -11,7 +11,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jackson-tiplink.persona-test",
-      "appleTeamId": "UQUN5697XB"
+      "appleTeamId": "UQUN5697XB",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +24,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.fintech.personatest"
     },
     "web": {
       "output": "static",
@@ -45,6 +49,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fd0a0b81-2447-45bc-8448-936fbf62af44"
+      }
+    },
+    "owner": "fin-tech"
   }
 }
