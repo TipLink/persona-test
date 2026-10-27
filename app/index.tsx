@@ -1,7 +1,10 @@
+import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import {
   Alert,
   Button,
+  Linking,
   ScrollView,
   Text,
   TextInput,
@@ -59,6 +62,37 @@ export default function Index() {
   const [selectedEnv, setSelectedEnv] = useState<PersonaEnvOption>(
     ENVIRONMENTS[1], // default to Development Sandbox (safest)
   );
+  const [cameraStatus, setCameraStatus] = useState<string | null>(null);
+  const [testPhotoUri, setTestPhotoUri] = useState<string | null>(null);
+
+  const testCamera = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    setCameraStatus(permission.status);
+
+    if (!permission.granted) {
+      Alert.alert(
+        "Camera access denied",
+        "Enable camera access for this app in Settings.",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "Open Settings", onPress: () => Linking.openSettings() },
+        ],
+      );
+      return;
+    }
+
+    try {
+      const result = await ImagePicker.launchCameraAsync({ quality: 0.5 });
+      if (!result.canceled) {
+        setTestPhotoUri(result.assets[0].uri);
+      }
+    } catch (error) {
+      Alert.alert(
+        "Camera error",
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  };
 
   const startInquiry = () => {
     const host = selectedEnv.isSimulated
@@ -174,6 +208,20 @@ export default function Index() {
         title={`Start Inquiry (${selectedEnv.label})`}
         onPress={startInquiry}
       />
+
+      <Button title="Test Camera" onPress={testCamera} />
+      {cameraStatus && (
+        <Text style={{ textAlign: "center", color: "#666" }}>
+          Camera permission: {cameraStatus}
+        </Text>
+      )}
+      {testPhotoUri && (
+        <Image
+          source={{ uri: testPhotoUri }}
+          style={{ width: "100%", aspectRatio: 3 / 4, borderRadius: 8 }}
+          contentFit="cover"
+        />
+      )}
     </ScrollView>
   );
 }
