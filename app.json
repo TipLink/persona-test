@@ -47,6 +47,12 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": false
+        }
       ]
     ],
     "experiments": {
